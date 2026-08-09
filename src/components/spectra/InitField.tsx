@@ -64,7 +64,7 @@ export function InitField() {
         className={`mt-3 min-h-[1.25rem] text-xs ${state === "error" ? "text-destructive" : "text-muted-foreground"}`}
       >
         {message ||
-          "Optional. Submitting issues a single POST to /api/agent/init — it does not replace the autonomous scheduler."}
+          "Spectra stays dormant until initialized here. The first cycle starts only after manual initialization."}
       </p>
     </form>
   );
