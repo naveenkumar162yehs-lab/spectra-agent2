@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostPostIdRouteImport } from './routes/post.$postId'
 import { Route as ApiAgentFeedRouteImport } from './routes/api/agent/feed'
 import { Route as ApiAgentInitRouteImport } from './routes/api/agent/init'
 import { Route as ApiPublicHooksAgentCycleRouteImport } from './routes/api/public/hooks/agent-cycle'
@@ -17,6 +18,11 @@ import { Route as ApiPublicHooksAgentCycleRouteImport } from './routes/api/publi
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostPostIdRoute = PostPostIdRouteImport.update({
+  id: '/post/$postId',
+  path: '/post/$postId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAgentFeedRoute = ApiAgentFeedRouteImport.update({
@@ -38,12 +44,14 @@ const ApiPublicHooksAgentCycleRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/post/$postId': typeof PostPostIdRoute
   '/api/agent/feed': typeof ApiAgentFeedRoute
   '/api/agent/init': typeof ApiAgentInitRoute
   '/api/public/hooks/agent-cycle': typeof ApiPublicHooksAgentCycleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/post/$postId': typeof PostPostIdRoute
   '/api/agent/feed': typeof ApiAgentFeedRoute
   '/api/agent/init': typeof ApiAgentInitRoute
   '/api/public/hooks/agent-cycle': typeof ApiPublicHooksAgentCycleRoute
@@ -51,6 +59,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/post/$postId': typeof PostPostIdRoute
   '/api/agent/feed': typeof ApiAgentFeedRoute
   '/api/agent/init': typeof ApiAgentInitRoute
   '/api/public/hooks/agent-cycle': typeof ApiPublicHooksAgentCycleRoute
@@ -59,18 +68,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/post/$postId'
     | '/api/agent/feed'
     | '/api/agent/init'
     | '/api/public/hooks/agent-cycle'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/post/$postId'
     | '/api/agent/feed'
     | '/api/agent/init'
     | '/api/public/hooks/agent-cycle'
   id:
     | '__root__'
     | '/'
+    | '/post/$postId'
     | '/api/agent/feed'
     | '/api/agent/init'
     | '/api/public/hooks/agent-cycle'
@@ -78,6 +90,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PostPostIdRoute: typeof PostPostIdRoute
   ApiAgentFeedRoute: typeof ApiAgentFeedRoute
   ApiAgentInitRoute: typeof ApiAgentInitRoute
   ApiPublicHooksAgentCycleRoute: typeof ApiPublicHooksAgentCycleRoute
@@ -90,6 +103,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post/$postId': {
+      id: '/post/$postId'
+      path: '/post/$postId'
+      fullPath: '/post/$postId'
+      preLoaderRoute: typeof PostPostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/agent/feed': {
@@ -118,6 +138,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PostPostIdRoute: PostPostIdRoute,
   ApiAgentFeedRoute: ApiAgentFeedRoute,
   ApiAgentInitRoute: ApiAgentInitRoute,
   ApiPublicHooksAgentCycleRoute: ApiPublicHooksAgentCycleRoute,
