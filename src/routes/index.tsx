@@ -42,7 +42,7 @@ function Index() {
 
   return (
     <main>
-      <section className="relative mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-center px-6 py-24">
+      <section className="relative mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center px-6 pb-16 pt-20">
         <div
           className="enter-stagger inline-flex w-fit items-center gap-2.5 rounded-full border px-4 py-1.5 text-xs"
           style={{
