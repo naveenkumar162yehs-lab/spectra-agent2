@@ -14,7 +14,192 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      agents: {
+        Row: {
+          config: Json
+          created_at: string
+          id: string
+          initialized_at: string
+          last_published_at: string | null
+          last_run_at: string | null
+          name: string
+          next_run_at: string | null
+          status: string
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          id?: string
+          initialized_at?: string
+          last_published_at?: string | null
+          last_run_at?: string | null
+          name?: string
+          next_run_at?: string | null
+          status?: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          id?: string
+          initialized_at?: string
+          last_published_at?: string | null
+          last_run_at?: string | null
+          name?: string
+          next_run_at?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      posts: {
+        Row: {
+          agent_id: string
+          archetype: string | null
+          created_at: string
+          id: string
+          length_choice: string | null
+          rationale: string
+          run_id: string | null
+          sources: Json
+          text: string
+          title: string
+          topic_fingerprint: string | null
+        }
+        Insert: {
+          agent_id: string
+          archetype?: string | null
+          created_at?: string
+          id?: string
+          length_choice?: string | null
+          rationale: string
+          run_id?: string | null
+          sources?: Json
+          text: string
+          title: string
+          topic_fingerprint?: string | null
+        }
+        Update: {
+          agent_id?: string
+          archetype?: string | null
+          created_at?: string
+          id?: string
+          length_choice?: string | null
+          rationale?: string
+          run_id?: string | null
+          sources?: Json
+          text?: string
+          title?: string
+          topic_fingerprint?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      run_candidates: {
+        Row: {
+          classification: string | null
+          created_at: string
+          decision: string | null
+          id: string
+          published_at: string | null
+          reason: string | null
+          run_id: string
+          source_type: string | null
+          summary: string | null
+          title: string
+          url: string | null
+        }
+        Insert: {
+          classification?: string | null
+          created_at?: string
+          decision?: string | null
+          id?: string
+          published_at?: string | null
+          reason?: string | null
+          run_id: string
+          source_type?: string | null
+          summary?: string | null
+          title: string
+          url?: string | null
+        }
+        Update: {
+          classification?: string | null
+          created_at?: string
+          decision?: string | null
+          id?: string
+          published_at?: string | null
+          reason?: string | null
+          run_id?: string
+          source_type?: string | null
+          summary?: string | null
+          title?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "run_candidates_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "runs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      runs: {
+        Row: {
+          agent_id: string
+          error: string | null
+          finished_at: string | null
+          id: string
+          length_choice: string | null
+          notes: string | null
+          outcome: string | null
+          selected_angle: string | null
+          selected_topic: string | null
+          started_at: string
+          status: string
+        }
+        Insert: {
+          agent_id: string
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          length_choice?: string | null
+          notes?: string | null
+          outcome?: string | null
+          selected_angle?: string | null
+          selected_topic?: string | null
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          agent_id?: string
+          error?: string | null
+          finished_at?: string | null
+          id?: string
+          length_choice?: string | null
+          notes?: string | null
+          outcome?: string | null
+          selected_angle?: string | null
+          selected_topic?: string | null
+          started_at?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "runs_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
