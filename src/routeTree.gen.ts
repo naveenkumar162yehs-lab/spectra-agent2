@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as PostPostIdRouteImport } from './routes/post.$postId'
 import { Route as ApiAgentFeedRouteImport } from './routes/api/agent/feed'
 import { Route as ApiAgentInitRouteImport } from './routes/api/agent/init'
@@ -18,6 +20,16 @@ import { Route as ApiPublicHooksAgentCycleRouteImport } from './routes/api/publi
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostPostIdRoute = PostPostIdRouteImport.update({
@@ -44,6 +56,8 @@ const ApiPublicHooksAgentCycleRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/console': typeof ConsoleRoute
   '/post/$postId': typeof PostPostIdRoute
   '/api/agent/feed': typeof ApiAgentFeedRoute
   '/api/agent/init': typeof ApiAgentInitRoute
@@ -51,6 +65,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/console': typeof ConsoleRoute
   '/post/$postId': typeof PostPostIdRoute
   '/api/agent/feed': typeof ApiAgentFeedRoute
   '/api/agent/init': typeof ApiAgentInitRoute
@@ -59,6 +75,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/console': typeof ConsoleRoute
   '/post/$postId': typeof PostPostIdRoute
   '/api/agent/feed': typeof ApiAgentFeedRoute
   '/api/agent/init': typeof ApiAgentInitRoute
@@ -68,6 +86,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/console'
     | '/post/$postId'
     | '/api/agent/feed'
     | '/api/agent/init'
@@ -75,6 +95,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/console'
     | '/post/$postId'
     | '/api/agent/feed'
     | '/api/agent/init'
@@ -82,6 +104,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/console'
     | '/post/$postId'
     | '/api/agent/feed'
     | '/api/agent/init'
@@ -90,6 +114,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ConsoleRoute: typeof ConsoleRoute
   PostPostIdRoute: typeof PostPostIdRoute
   ApiAgentFeedRoute: typeof ApiAgentFeedRoute
   ApiAgentInitRoute: typeof ApiAgentInitRoute
@@ -103,6 +129,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/post/$postId': {
@@ -138,6 +178,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ConsoleRoute: ConsoleRoute,
   PostPostIdRoute: PostPostIdRoute,
   ApiAgentFeedRoute: ApiAgentFeedRoute,
   ApiAgentInitRoute: ApiAgentInitRoute,

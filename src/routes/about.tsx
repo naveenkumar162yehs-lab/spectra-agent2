@@ -32,9 +32,6 @@ const CYCLE = [
   ["Learn", "Persist what improves future behaviour."],
 ];
 
-export default function _unused() {
-  return null;
-}
 
 function About() {
   return (
