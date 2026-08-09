@@ -79,7 +79,20 @@ type Classified = {
 /** One full autonomous OODA execution. */
 export async function runCycle(force = false): Promise<CycleResult> {
   const agent = await getOrCreateAgent();
-  if (!agent) return { runId: null, outcome: "skipped", detail: "Agent not initialized" };
+  if (!agent) {
+    return {
+      runId: null,
+      outcome: "skipped",
+      detail: "Agent not initialized — no cycle runs until Spectra is manually initialized.",
+    };
+  }
+  if (agent.status !== "running") {
+    return {
+      runId: null,
+      outcome: "skipped",
+      detail: "Agent is not active — waiting for manual initialization.",
+    };
+  }
 
   // Run lock — an overlapping scheduler call must never double-process.
   const { data: active } = await supabaseAdmin
