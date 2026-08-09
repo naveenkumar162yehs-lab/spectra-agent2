@@ -10,33 +10,77 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiAgentFeedRouteImport } from './routes/api/agent/feed'
+import { Route as ApiAgentInitRouteImport } from './routes/api/agent/init'
+import { Route as ApiPublicHooksAgentCycleRouteImport } from './routes/api/public/hooks/agent-cycle'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentFeedRoute = ApiAgentFeedRouteImport.update({
+  id: '/api/agent/feed',
+  path: '/api/agent/feed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentInitRoute = ApiAgentInitRouteImport.update({
+  id: '/api/agent/init',
+  path: '/api/agent/init',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksAgentCycleRoute =
+  ApiPublicHooksAgentCycleRouteImport.update({
+    id: '/api/public/hooks/agent-cycle',
+    path: '/api/public/hooks/agent-cycle',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/agent/feed': typeof ApiAgentFeedRoute
+  '/api/agent/init': typeof ApiAgentInitRoute
+  '/api/public/hooks/agent-cycle': typeof ApiPublicHooksAgentCycleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/agent/feed': typeof ApiAgentFeedRoute
+  '/api/agent/init': typeof ApiAgentInitRoute
+  '/api/public/hooks/agent-cycle': typeof ApiPublicHooksAgentCycleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/agent/feed': typeof ApiAgentFeedRoute
+  '/api/agent/init': typeof ApiAgentInitRoute
+  '/api/public/hooks/agent-cycle': typeof ApiPublicHooksAgentCycleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/agent/feed'
+    | '/api/agent/init'
+    | '/api/public/hooks/agent-cycle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/agent/feed'
+    | '/api/agent/init'
+    | '/api/public/hooks/agent-cycle'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/agent/feed'
+    | '/api/agent/init'
+    | '/api/public/hooks/agent-cycle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiAgentFeedRoute: typeof ApiAgentFeedRoute
+  ApiAgentInitRoute: typeof ApiAgentInitRoute
+  ApiPublicHooksAgentCycleRoute: typeof ApiPublicHooksAgentCycleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +92,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/agent/feed': {
+      id: '/api/agent/feed'
+      path: '/api/agent/feed'
+      fullPath: '/api/agent/feed'
+      preLoaderRoute: typeof ApiAgentFeedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agent/init': {
+      id: '/api/agent/init'
+      path: '/api/agent/init'
+      fullPath: '/api/agent/init'
+      preLoaderRoute: typeof ApiAgentInitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/agent-cycle': {
+      id: '/api/public/hooks/agent-cycle'
+      path: '/api/public/hooks/agent-cycle'
+      fullPath: '/api/public/hooks/agent-cycle'
+      preLoaderRoute: typeof ApiPublicHooksAgentCycleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiAgentFeedRoute: ApiAgentFeedRoute,
+  ApiAgentInitRoute: ApiAgentInitRoute,
+  ApiPublicHooksAgentCycleRoute: ApiPublicHooksAgentCycleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
